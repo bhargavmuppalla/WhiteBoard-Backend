@@ -19,6 +19,7 @@ let roomIdGlobal, imgURLGlobal;
 
 io.on('connection', (socket) => {
   socket.on('userJoined', (data) => {
+    // console.log('user joined data:', data);
     const { name, userId, roomId, host, presenter } = data;
     roomIdGlobal = roomId;
     socket.join(roomId);
@@ -30,6 +31,7 @@ io.on('connection', (socket) => {
       presenter,
       socketId: socket.id
     });
+    // console.log('users inside server :', users);
     socket.broadcast.to(roomId).emit('userJoinedMessageBroadcasted', name);
     io.to(roomId).emit('allUsers', users);
     io.to(roomId).emit('whiteBoardDataResponse', {
